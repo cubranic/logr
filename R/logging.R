@@ -1,5 +1,6 @@
 ## Executes an expression within the context of specified active
 ## loggers
+#' @export
 with_logging <- function(expr, ..., level = NULL) {
     log_outputs <- make_log_output(level, ...)
     on.exit(lapply(log_outputs, close.LogOutput))
@@ -11,6 +12,7 @@ with_logging <- function(expr, ..., level = NULL) {
 
 
 ## evaluate an expression in a context that turns off all logging
+#' @export
 suppress_logging <- function(expr) {
     withCallingHandlers(expr,
                         LoggingMessage = function(cond) invokeRestart('muffle_logging'))

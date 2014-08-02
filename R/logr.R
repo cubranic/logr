@@ -6,6 +6,7 @@
 #'   construct log messages; main usage is to exert control over arguments to 
 #'   \code{print.data.frame}, such as \code{right} for alignment and 
 #'   \code{row.names}. (See \code{format_message} for details.)
+#' @export
 logr <- function(x, level, ...) {
   cond <- LoggingMessage(format_message(x, ...), level)
   withRestarts({
@@ -22,26 +23,31 @@ logr <- function(x, level, ...) {
 }
 
 
+#' @export
 error <- function(x, ...) {
     logr(x, level = 'ERROR')
 }
 
 
+#' @export
 warn <- function(x, ...) {
     logr(x, level = 'WARN')
 }
 
 
+#' @export
 info <- function(x, ...) {
     logr(x, level = 'INFO', ...)
 }
 
 
+#' @export
 debug <- function(x, ...) {
     logr(x, level = 'DEBUG', ...)
 }
 
 
+#' @export
 trace <- function(x, ...) {
     logr(x, level = 'TRACE')
 }
