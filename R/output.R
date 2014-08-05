@@ -17,6 +17,8 @@ LogOutput <- function(destination=stderr(), level = 'INFO') {
 
 
 logging_level <- function(level) {
+    if (is.null(level)) return(level)
+    
     ll <- ordered(toupper(level),
                   levels = c('ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE'))
     if (is.na(ll)) stop('unknown logging level "', level, '"')

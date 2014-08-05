@@ -24,8 +24,8 @@ make_log_output <- function(default_level, ...) {
     if (length(destinations) == 0) {
         destinations <- list(stderr())
     }
-    lapply(destinations, function(d) {
-        if (length(d) == 1) {
+    Reduce(function(outputs, d) {
+        dd <- if (length(d) == 1) {
             if (is.null(default_level)) {
                 LogOutput(d)
             } else {
@@ -35,5 +35,12 @@ make_log_output <- function(default_level, ...) {
             d <- as.list(d)
             LogOutput(d[[1]], d[[2]])
         } else stop('Each output destination has to be a file name, connection, or a pair of (destination, detail_level)')
-    })
+        
+        if (is.null(dd$level)) {
+            close.LogOutput(dd)
+            outputs
+        } else {
+            c(outputs, list(dd))
+        }
+    }, destinations, init = list())
 }

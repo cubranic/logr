@@ -40,3 +40,9 @@ test_that('file-only at trace level', {
                              'detailed output',
                              'debugging message'))
 })
+
+
+test_that('file-only at NULL level', {
+    file_helper(list(tempfile(), NULL),
+                expected = character(0))
+})

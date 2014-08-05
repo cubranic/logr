@@ -36,3 +36,9 @@ test_that("logging without an active logger", {
         info('hello there')
     }, 'hello there')
 })
+
+
+test_that('NULL level', {
+    console_helper(list('', NULL),
+                   expected = character(0))
+})

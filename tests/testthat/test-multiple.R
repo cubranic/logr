@@ -54,3 +54,27 @@ test_that("errors and warnings only logging output", {
                      c('warning message',
                        'error message'))
 })
+
+
+test_that('NULL all', {
+    log_file <- tempfile(fileext='.log')
+
+    sink_file <- textConnection('console_out', 'w', local=TRUE)
+    on.exit({sink(type='message'); close(sink_file)}, add=TRUE)
+        
+    with_logging({
+        sink(sink_file, type='message')
+        warn('warning message')
+        info('hello there')
+        debug('debugging message')
+        error('error message')
+    }, list(log_file, NULL), list('', NULL))
+    
+    sink(type='message')
+    
+    ## Nothing is sent to either the log file or the console
+    expect_identical(readLines(log_file),
+                     character(0))
+    expect_identical(console_out,
+                     character(0))
+})
