@@ -46,3 +46,9 @@ test_that('file-only at NULL level', {
     file_helper(list(tempfile(), NULL),
                 expected = character(0))
 })
+
+
+test_that('file-only at default NULL level', {
+    file_helper(level = NULL,
+                expected = character(0))
+})

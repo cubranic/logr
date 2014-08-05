@@ -42,3 +42,9 @@ test_that('NULL level', {
     console_helper(list('', NULL),
                    expected = character(0))
 })
+
+
+test_that('NULL default level', {
+    console_helper(level = NULL,
+                   expected = character(0))
+})

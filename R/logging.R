@@ -1,7 +1,7 @@
 ## Executes an expression within the context of specified active
 ## loggers
 #' @export
-with_logging <- function(expr, ..., level = NULL) {
+with_logging <- function(expr, ..., level = NA) {
     log_outputs <- make_log_output(level, ...)
     on.exit(lapply(log_outputs, close.LogOutput))
     
@@ -26,7 +26,7 @@ make_log_output <- function(default_level, ...) {
     }
     Reduce(function(outputs, d) {
         dd <- if (length(d) == 1) {
-            if (is.null(default_level)) {
+            if (!is.null(default_level) && is.na(default_level)) {
                 LogOutput(d)
             } else {
                 LogOutput(d, default_level)

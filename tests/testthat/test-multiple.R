@@ -78,3 +78,52 @@ test_that('NULL all', {
     expect_identical(console_out,
                      character(0))
 })
+
+
+test_that('default NULL all', {
+    log_file <- tempfile(fileext='.log')
+
+    sink_file <- textConnection('console_out', 'w', local=TRUE)
+    on.exit({sink(type='message'); close(sink_file)}, add=TRUE)
+    
+    with_logging({
+        sink(sink_file, type='message')
+        warn('warning message')
+        info('hello there')
+        debug('debugging message')
+        error('error message')
+    }, log_file, '', level = NULL)
+    
+    sink(type='message')
+    
+    ## Nothing is sent to either the log file or the console
+    expect_identical(readLines(log_file),
+                     character(0))
+    expect_identical(console_out,
+                     character(0))
+})
+
+
+test_that("multiple outputs with default NULL level", {
+    log_file <- tempfile(fileext='.log')
+
+    sink_file <- textConnection('console_out', 'w', local=TRUE)
+    on.exit({sink(type='message'); close(sink_file)}, add=TRUE)
+    
+    with_logging({
+        sink(sink_file, type='message')
+        info('hello there')
+        trace('detailed output')
+        debug('debugging message')
+    }, c(log_file, 'DEBUG'), '', level=NULL)
+    
+    sink(type='message')
+    ## INFO, DEBUG, and TRACE messages are sent to the log file
+    expect_identical(readLines(log_file),
+                     c('hello there',
+                       'debugging message'))
+    
+    ## both INFO and DEBUG messages are sent to the console
+    expect_identical(console_out,
+                     character(0))
+})
