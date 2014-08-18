@@ -1,7 +1,7 @@
-#' Outputs a message using the currently active logging outputs
+#' Sends a message to the currently active logging outputs
 #' 
-#' @param x something to put in the log, usually a message
-#' @param level the verbosity
+#' @param x an object to output in the log, such as a character vector
+#' @param level the detail level of the message
 #' @param ... optional arguments passed to the low-level functions that 
 #'   construct log messages; main usage is to exert control over arguments to 
 #'   \code{print.data.frame}, such as \code{right} for alignment and 
@@ -23,30 +23,40 @@ add_log <- function(x, level, ...) {
 }
 
 
+#' @describeIn add_log Sends a message at the "ERROR" level
+#'
 #' @export
 error_log <- function(x, ...) {
     add_log(x, level = 'ERROR')
 }
 
 
+#' @describeIn add_log Sends a message at the "WARN" level
+#'
 #' @export
 warn_log <- function(x, ...) {
     add_log(x, level = 'WARN')
 }
 
 
+#' @describeIn add_log Sends a message at the "INFO" level
+#'
 #' @export
 info_log <- function(x, ...) {
     add_log(x, level = 'INFO', ...)
 }
 
 
+#' @describeIn add_log Sends a message at the "DEBUG" level
+#'
 #' @export
 debug_log <- function(x, ...) {
     add_log(x, level = 'DEBUG', ...)
 }
 
 
+#' @describeIn add_log Sends a message at the "TRACE" level
+#'
 #' @export
 trace_log <- function(x, ...) {
     add_log(x, level = 'TRACE')
