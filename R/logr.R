@@ -7,7 +7,7 @@
 #'   \code{print.data.frame}, such as \code{right} for alignment and 
 #'   \code{row.names}. (See \code{format_message} for details.)
 #' @export
-logr <- function(x, level, ...) {
+add_log <- function(x, level, ...) {
   cond <- LoggingMessage(format_message(x, ...), level)
   withRestarts({
       signalCondition(cond)
@@ -24,30 +24,30 @@ logr <- function(x, level, ...) {
 
 
 #' @export
-error <- function(x, ...) {
-    logr(x, level = 'ERROR')
+error_log <- function(x, ...) {
+    add_log(x, level = 'ERROR')
 }
 
 
 #' @export
-warn <- function(x, ...) {
-    logr(x, level = 'WARN')
+warn_log <- function(x, ...) {
+    add_log(x, level = 'WARN')
 }
 
 
 #' @export
-info <- function(x, ...) {
-    logr(x, level = 'INFO', ...)
+info_log <- function(x, ...) {
+    add_log(x, level = 'INFO', ...)
 }
 
 
 #' @export
-debug <- function(x, ...) {
-    logr(x, level = 'DEBUG', ...)
+debug_log <- function(x, ...) {
+    add_log(x, level = 'DEBUG', ...)
 }
 
 
 #' @export
-trace <- function(x, ...) {
-    logr(x, level = 'TRACE')
+trace_log <- function(x, ...) {
+    add_log(x, level = 'TRACE')
 }

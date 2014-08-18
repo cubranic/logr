@@ -8,9 +8,9 @@ test_that("multiple outputs at different levels", {
     
     with_logging({
         sink(sink_file, type='message')
-        info('hello there')
-        trace('detailed output')
-        debug('debugging message')
+        info_log('hello there')
+        trace_log('detailed output')
+        debug_log('debugging message')
     }, c(log_file, 'TRACE'), '', level='DEBUG')
     
     sink(type='message')
@@ -35,10 +35,10 @@ test_that("errors and warnings only logging output", {
         
     with_logging({
         sink(sink_file, type='message')
-        warn('warning message')
-        info('hello there')
-        debug('debugging message')
-        error('error message')
+        warn_log('warning message')
+        info_log('hello there')
+        debug_log('debugging message')
+        error_log('error message')
     }, c(log_file, 'INFO'), c('', 'WARN'))
     
     sink(type='message')
@@ -64,10 +64,10 @@ test_that('NULL all', {
         
     with_logging({
         sink(sink_file, type='message')
-        warn('warning message')
-        info('hello there')
-        debug('debugging message')
-        error('error message')
+        warn_log('warning message')
+        info_log('hello there')
+        debug_log('debugging message')
+        error_log('error message')
     }, list(log_file, NULL), list('', NULL))
     
     sink(type='message')
@@ -88,10 +88,10 @@ test_that('default NULL all', {
     
     with_logging({
         sink(sink_file, type='message')
-        warn('warning message')
-        info('hello there')
-        debug('debugging message')
-        error('error message')
+        warn_log('warning message')
+        info_log('hello there')
+        debug_log('debugging message')
+        error_log('error message')
     }, log_file, '', level = NULL)
     
     sink(type='message')
@@ -112,9 +112,9 @@ test_that("multiple outputs with default NULL level", {
     
     with_logging({
         sink(sink_file, type='message')
-        info('hello there')
-        trace('detailed output')
-        debug('debugging message')
+        info_log('hello there')
+        trace_log('detailed output')
+        debug_log('debugging message')
     }, c(log_file, 'DEBUG'), '', level=NULL)
     
     sink(type='message')

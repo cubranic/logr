@@ -6,9 +6,9 @@ console_helper <- function(..., expected) {
     
     with_logging({
         sink(sink_file, type='message')
-        info('hello there')
-        trace('detailed output')
-        debug('debugging message')
+        info_log('hello there')
+        trace_log('detailed output')
+        debug_log('debugging message')
     }, ...)
     
     sink(type='message')
@@ -33,7 +33,7 @@ test_that('default output with debug as the default level', {
 
 test_that("logging without an active logger", {
     expect_message({
-        info('hello there')
+        info_log('hello there')
     }, 'hello there')
 })
 

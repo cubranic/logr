@@ -6,9 +6,9 @@ file_helper <- function(log_file = tempfile(fileext='.log'), ..., expected) {
     
     with_logging({
         sink(sink_file, type='message')
-        info('hello there')
-        trace('detailed output')
-        debug('debugging message')
+        info_log('hello there')
+        trace_log('detailed output')
+        debug_log('debugging message')
     }, log_file, ...)
     
     sink(type='message')
