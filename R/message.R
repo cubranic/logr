@@ -37,8 +37,10 @@ format_message.default <- function(x, appendLF = TRUE, ...) {
 ## @param x the character vector object to put in the log
 ## @param appendLF (logical) should the message text have a newline
 ##                 appended at each line
+## @param wrap (logical) should the message text first be reformatted
+##             using `strwrap`
 ## @param ... optional arguments passed through to `strwrap`
-format_message.character <- function(x, appendLF = TRUE, wrap = TRUE, ...) {
+format_message.character <- function(x, appendLF = TRUE, wrap = any(nchar(x) > 0.9 * getOption('width')), ...) {
     if (wrap) {
         x <- strwrap(x, ...)
     }

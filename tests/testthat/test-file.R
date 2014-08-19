@@ -52,3 +52,28 @@ test_that('file-only at default NULL level', {
     file_helper(level = NULL,
                 expected = character(0))
 })
+
+
+test_that('smarter message wrapping', {
+    log_file <- tempfile(fileext='.log')
+    
+    ## no wrapping happens with short text
+    with_logging({
+        info_log('foo   bar bla ')
+        debug_log('ignored')
+    }, log_file)
+     
+    expect_identical(readLines(log_file),
+                     'foo   bar bla ')
+
+    ## messages with long lines will by default be wrapped
+    opt <- options(width=14)
+    on.exit(options(opt))
+    with_logging({
+        info_log('foo   bar bla ')
+        debug_log('ignored')
+    }, log_file)
+    
+    expect_identical(readLines(log_file),
+                     'foo bar bla')
+})
