@@ -1,7 +1,7 @@
 Package: logr
 Title: Logging framework in the R idiom
 Version: 0.1
-Authors.R: "Davor Cubranic <cubranic@stat.ubc.ca> [aut, cre]"
+Authors@R: "Davor Cubranic <cubranic@stat.ubc.ca> [aut, cre]"
 Description: Logr provides a logging framework that aims to be easy to
     adopt and use, minimally intrusive, and compatible with R's
     existing messaging functionality. It puts these goals over
