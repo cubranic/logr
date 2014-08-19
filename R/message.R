@@ -71,15 +71,18 @@ format_message.data.frame <- function(x, ...) {
 
 
 format_message.message <- function(x, ...) {
-    format_message.character(paste('Message:', conditionMessage(x)))
+    format_message.character(paste('Message:', conditionMessage(x)),
+                             appendLF = FALSE, wrap = FALSE)
 }
 
 
 format_message.warning <- function(x, ...) {
-    format_message.character(paste('Warning:', conditionMessage(x)))
+    format_message.character(paste('Warning:', conditionMessage(x)),
+                             wrap = FALSE)
 }
 
 
 format_message.error <- function(x, ...) {
-    format_message.character(paste('Error:', conditionMessage(x)))
+    format_message.character(paste('Error:', conditionMessage(x)),
+                             wrap = FALSE)
 }
