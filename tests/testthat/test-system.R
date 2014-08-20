@@ -68,3 +68,24 @@ test_that("logging system messages", {
     expect_identical(readLines(log_file),
                      'Warning: warning message')
 })
+
+
+test_that("logging without an active logger", {
+    block <- evaluate_promise({
+        info_log('hello there')
+        trace_log('detailed output')
+        debug_log('debugging message')
+        warn_log('warning message')
+    })
+    
+    ## INFO -> message
+    expect_equal(block$messages, 'hello there\n')
+    
+    ## WARN -> warning
+    expect_equal(block$warnings, 'warning message\n')
+    
+    ## ERROR -> stop
+    expect_error({
+        error_log('error message')
+    }, 'error message')
+})

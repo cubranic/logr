@@ -31,13 +31,6 @@ test_that('default output with debug as the default level', {
 })
 
 
-test_that("logging without an active logger", {
-    expect_message({
-        info_log('hello there')
-    }, 'hello there')
-})
-
-
 test_that('NULL level', {
     console_helper(list('', NULL),
                    expected = character(0))

@@ -15,7 +15,10 @@ add_log <- function(x, level, ...) {
       ## We'll get here if no restarts were invoked, which can only
       ## happen if the logging is not active. In that case, we'll
       ## simply output to the console
-      message(conditionMessage(cond))
+      switch(as.character(cond$level),
+             ERROR = stop(conditionMessage(cond)),
+             WARN = warning(conditionMessage(cond)),
+             INFO = message(conditionMessage(cond), appendLF = FALSE))
   }, output_message = function(log_outputs) {
       lapply(log_outputs, output_message, message = cond)
   }, muffle_logging = function() NULL)
