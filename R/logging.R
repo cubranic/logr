@@ -47,10 +47,23 @@
 with_logging <- function(expr, ..., level = NA) {
     log_outputs <- make_log_output(level, ...)
     on.exit(lapply(log_outputs, close.LogOutput))
+
+    with_logging_call <- sys.call()
     
-    withCallingHandlers(expr,
-                        LoggingMessage = make_logging_handler(log_outputs),
-                        condition = make_system_logging_handler(log_outputs))
+    withRestarts(
+        withCallingHandlers(expr,
+                            LoggingMessage = make_logging_handler(log_outputs),
+                            condition = make_system_logging_handler(log_outputs)),
+        resignal_with_call = function(cond) {
+            cond$call <- with_logging_call
+            if (inherits(cond, 'error')) {
+                stop(cond)
+            } else if (inherits(cond, 'warning')) {
+                warning(cond)
+            } else if (inherits(cond, 'message')) {
+                message(cond)
+            }
+        })
 }
 
 

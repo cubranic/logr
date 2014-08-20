@@ -89,3 +89,32 @@ test_that("logging without an active logger", {
         error_log('error message')
     }, 'error message')
 })
+
+
+test_that("sensible error reporting", {
+    expect_error({
+        with_logging({
+            1+'foo'
+        })
+    }, '^Error in 1 \\+ "foo"')
+
+    ## `stop` called directly within expression evaluated inside
+    ## `with_logging` should appear to have come from `with_logging`,
+    ## rather than its internals
+    expect_error({
+        with_logging(stop('foo'))
+    }, '^Error in with_logging\\(stop\\("foo"\\)\\)')
+    
+    cl <- NULL
+    tryCatch({
+        with_logging(warning('bar'))
+    }, warning = function(cond) if (is.null(cl)) cl <<- conditionCall(cond) else stop(cl))
+    
+    expect_match(paste(deparse(cl), collapse='\n'),
+                 '^with_logging\\(warning\\("bar"\\)\\)')
+
+    block <- evaluate_promise({
+        with_logging(warning('bar'))
+    })
+    expect_equal(block$warnings, 'bar')
+})
