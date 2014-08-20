@@ -30,7 +30,7 @@ add_log <- function(x, level, ...) {
 #'
 #' @export
 error_log <- function(x, ...) {
-    add_log(x, level = 'ERROR')
+    add_log(x, level = 'ERROR', ...)
 }
 
 
@@ -38,7 +38,7 @@ error_log <- function(x, ...) {
 #'
 #' @export
 warn_log <- function(x, ...) {
-    add_log(x, level = 'WARN')
+    add_log(x, level = 'WARN', ...)
 }
 
 
@@ -62,5 +62,5 @@ debug_log <- function(x, ...) {
 #'
 #' @export
 trace_log <- function(x, ...) {
-    add_log(x, level = 'TRACE')
+    add_log(x, level = 'TRACE', ...)
 }

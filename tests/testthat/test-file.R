@@ -72,8 +72,10 @@ test_that('smarter message wrapping', {
     with_logging({
         info_log('foo   bar bla ')
         debug_log('ignored')
+        warn_log('foo   bar bla ', wrap = FALSE) # choose no-wrap
     }, log_file)
     
     expect_identical(readLines(log_file),
-                     'foo bar bla')
+                     c('foo bar bla',
+                       'foo   bar bla '))
 })
