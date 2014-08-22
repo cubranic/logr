@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/cubranic/logr.png?branch=master)](https://travis-ci.org/cubranic/logr)
+
 _Logr_ implements a logging framework that uses R's existing messaging
 functionality, and builds upon it an API that is simple to use.
 Because it shares the same underpinnings, _logr_ can capture messages
