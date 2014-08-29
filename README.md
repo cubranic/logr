@@ -26,7 +26,7 @@ importance (see below for list of all levels). With no other
 configuration, these functions will behave as their closest equivalent
 in _base_: `info_log` will act exactly like `message` (it can even be
 turned off with `suppressMessages`), `warn_log` as `warning` and
-`error_log` as `stop`. Messages with their level lower than INFO
+`error_log` as `stop`. Messages with their level higher than INFO
 (i.e., DEBUG and TRACE) will not be printed.
 
 To exert a finer control, wrap the code where you want to enable
