@@ -9,9 +9,10 @@ Description: Logr provides a logging framework that aims to be easy to
     capabilities (and, I hope, the baroqueness of its API) in the
     process.
 URL: https://github.com/cubranic/logr
+VignetteBuilder: knitr
 Depends:
     R (>= 3.0.0)
 License: LGPL-2
 LazyData: true
 Suggests:
-    testthat
+    testthat, knitr
