@@ -1,6 +1,8 @@
 ---
 title: "Introduction to Logging with _'logr'_"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    mathjax: null
 vignette: >
   %\VignetteIndexEntry{Introduction to logging with _logr_}
   %\VignetteEngine{knitr::rmarkdown}
