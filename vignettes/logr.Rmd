@@ -1,10 +1,11 @@
-<!--
-%\VignetteEngine{knitr}
-%\VignetteIndexEntry{Introduction to logging with _logr_}
--->
-
-Introduction to Logging with _logr_
-===================================
+---
+title: "Introduction to Logging with _'logr'_"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to logging with _logr_}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
 
 The _logr_ package implements a logging framework that uses R's
 existing messaging functionality, and builds upon it an API that is
