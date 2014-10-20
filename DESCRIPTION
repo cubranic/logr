@@ -8,6 +8,7 @@ Description: Logr provides a logging framework that aims to be easy to
     likeness to Log4j, even if it means sacrificing some of its
     capabilities (and, I hope, the baroqueness of its API) in the
     process.
+URL: https://github.com/cubranic/logr
 Depends:
     R (>= 3.0.0)
 License: LGPL-2
