@@ -1,13 +1,38 @@
 context("system messages")
 
 
+test_that("don't capture non-error system messages", {
+    ## let errors errors
+    expect_error({
+        with_logging({
+            stop('error message')
+        })
+    }, 'error message')
+    
+    ## warnings
+    expect_that({
+        with_logging({
+            message('hello there')
+            warning('warning message')
+        }, tempfile())
+    }, not(gives_warning('warning message')))
+    
+    ## messages
+    expect_that({
+        with_logging({
+            message('hello there')
+        }, tempfile())
+    }, not(shows_message('hello there')))
+})
+
+
 ### Base messaging functions still go through to their system handlers
 test_that("pass-through system messages", {
     ## errors
     expect_error({
         with_logging({
             stop('error message')
-        })
+        }, catch_system_messages = FALSE)
     }, 'error message')
         
     ## warnings
@@ -15,14 +40,14 @@ test_that("pass-through system messages", {
         with_logging({
             message('hello there')
             warning('warning message')
-        })
+        }, catch_system_messages = FALSE)
     }, 'warning message')
     
     ## messages
     expect_message({
         with_logging({
             message('hello there')
-        })
+        }, catch_system_messages = FALSE)
     }, 'hello there')
 })
 
@@ -107,14 +132,14 @@ test_that("sensible error reporting", {
     
     cl <- NULL
     tryCatch({
-        with_logging(warning('bar'))
+        with_logging(warning('bar'), catch_system_messages = FALSE)
     }, warning = function(cond) if (is.null(cl)) cl <<- conditionCall(cond) else stop(cl))
     
     expect_match(paste(deparse(cl), collapse='\n'),
-                 '^with_logging\\(warning\\("bar"\\)\\)')
+                 '^with_logging\\(warning\\("bar"\\), catch_system_messages = FALSE\\)')
 
     block <- evaluate_promise({
-        with_logging(warning('bar'))
+        with_logging(warning('bar'), catch_system_messages = FALSE)
     })
     expect_equal(block$warnings, 'bar')
 })

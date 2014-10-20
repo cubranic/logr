@@ -25,7 +25,10 @@ make_logging_handler <- function(outputs = list(LogOutput(stderr()))) {
 ##
 ## @param log_outputs active destinations for logging messages (a
 ##        vector of LogOutputs)
-make_system_logging_handler <- function(log_outputs) {
+## @param catch_system_messages whether `warning` and `message` should
+##        be let through for further processing by upstream active
+##        handlers
+make_system_logging_handler <- function(log_outputs, catch_system_messages) {
     internal_call <- sys.call(-1)
     
     ## we won't output to stderr since it's assumed there is a system
@@ -43,11 +46,23 @@ make_system_logging_handler <- function(log_outputs) {
             logging_message <- LoggingMessage(format_message(cond),
                                               message_level,
                                               conditionCall(cond))
-            lapply(non_console_outputs,
-                   output_message, message = logging_message)
-            
-            if (isTRUE(all.equal(conditionCall(cond), internal_call))) {
-                invokeRestart('resignal_with_call', cond)
+            if (inherits(cond, 'error') || !catch_system_messages) {
+                lapply(non_console_outputs,
+                       output_message, message = logging_message)
+                
+                if (isTRUE(all.equal(conditionCall(cond), internal_call))) {
+                    invokeRestart('resignal_with_call', cond)
+                }
+            }
+            else {
+                lapply(log_outputs, output_message, message = logging_message)
+                
+                if (identical(message_level, 'WARN')) {
+                    invokeRestart('muffleWarning')
+                }
+                else if (identical(message_level, 'INFO')) {
+                    invokeRestart('muffleMessage')
+                }
             }
         }
     }
