@@ -1,6 +1,6 @@
 context('multiple outputs')
 
-test_that("multiple outputs at different levels", {
+test_that("multiple outputs at different thresholds", {
     log_file <- tempfile(fileext='.log')
 
     sink_file <- textConnection('console_out', 'w', local=TRUE)
@@ -11,7 +11,7 @@ test_that("multiple outputs at different levels", {
         info_log('hello there')
         trace_log('detailed output')
         debug_log('debugging message')
-    }, c(log_file, 'TRACE'), '', level='DEBUG')
+    }, c(log_file, 'TRACE'), '', threshold = 'DEBUG')
     
     sink(type='message')
     ## INFO, DEBUG, and TRACE messages are sent to the log file
@@ -92,7 +92,7 @@ test_that('default NULL all', {
         info_log('hello there')
         debug_log('debugging message')
         error_log('error message')
-    }, log_file, '', level = NULL)
+    }, log_file, '', threshold = NULL)
     
     sink(type='message')
     
@@ -104,7 +104,7 @@ test_that('default NULL all', {
 })
 
 
-test_that("multiple outputs with default NULL level", {
+test_that("multiple outputs with default NULL threshold", {
     log_file <- tempfile(fileext='.log')
 
     sink_file <- textConnection('console_out', 'w', local=TRUE)
@@ -115,7 +115,7 @@ test_that("multiple outputs with default NULL level", {
         info_log('hello there')
         trace_log('detailed output')
         debug_log('debugging message')
-    }, c(log_file, 'DEBUG'), '', level=NULL)
+    }, c(log_file, 'DEBUG'), '', threshold = NULL)
     
     sink(type='message')
     ## INFO, DEBUG, and TRACE messages are sent to the log file

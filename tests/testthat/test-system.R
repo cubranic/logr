@@ -60,7 +60,7 @@ test_that("logging system messages", {
             with_logging({
                 message('hello there')
                 warning('warning message')
-            }, log_file, level = 'WARN')
+            }, log_file, threshold = 'WARN')
         })
     })
 

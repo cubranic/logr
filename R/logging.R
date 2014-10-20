@@ -18,13 +18,13 @@
 #' condition handling system.
 #' 
 #' Each output destination has to be a file name, a connection object,
-#' or a pair of "(destination, detail_level)". If no output
+#' or a pair of "(destination, threshold_level)". If no output
 #' destination is given, logging will use \code{stderr()} at the
 #' "INFO" threshold.
 #'
 #' @param expr expression to be evaluated
 #' @param ... output destinations, see details below
-#' @param level the default level used as the threshold for logging
+#' @param threshold the default level used as the threshold for logging
 #' outputs
 #'
 #' @examples
@@ -44,8 +44,8 @@
 #' }, list(tempfile(), 'TRACE'), stderr())
 #' 
 #' @export
-with_logging <- function(expr, ..., level = NA) {
-    log_outputs <- make_log_output(level, ...)
+with_logging <- function(expr, ..., threshold = NA) {
+    log_outputs <- make_log_output(threshold, ...)
     on.exit(lapply(log_outputs, close.LogOutput))
 
     with_logging_call <- sys.call()
@@ -75,24 +75,24 @@ suppress_logging <- function(expr) {
 }
 
 
-make_log_output <- function(default_level, ...) {
+make_log_output <- function(default_threshold, ...) {
     destinations <- list(...)
     if (length(destinations) == 0) {
         destinations <- list(stderr())
     }
     Reduce(function(outputs, d) {
         dd <- if (length(d) == 1) {
-            if (!is.null(default_level) && is.na(default_level)) {
+            if (!is.null(default_threshold) && is.na(default_threshold)) {
                 LogOutput(d)
             } else {
-                LogOutput(d, default_level)
+                LogOutput(d, default_threshold)
             }
         } else if (length(d) == 2) {
             d <- as.list(d)
             LogOutput(d[[1]], d[[2]])
-        } else stop('Each output destination has to be a file name, connection, or a pair of (destination, detail_level)')
+        } else stop('Each output destination has to be a file name, connection, or a pair of (destination, detail_threshold)')
         
-        if (is.null(dd$level)) {
+        if (is.null(dd$threshold)) {
             close.LogOutput(dd)
             outputs
         } else {

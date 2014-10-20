@@ -24,20 +24,20 @@ test_that('default', {
 })
 
 
-test_that('default output with debug as the default level', {
+test_that('default output with debug as the default threshold', {
     console_helper(expected = c('hello there',
                                 'debugging message'),
-                   level = 'DEBUG')
+                   threshold = 'DEBUG')
 })
 
 
-test_that('NULL level', {
+test_that('NULL threshold', {
     console_helper(list('', NULL),
                    expected = character(0))
 })
 
 
-test_that('NULL default level', {
-    console_helper(level = NULL,
+test_that('NULL default threshold', {
+    console_helper(threshold = NULL,
                    expected = character(0))
 })

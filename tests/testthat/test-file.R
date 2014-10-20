@@ -14,7 +14,7 @@ file_helper <- function(log_file = tempfile(fileext='.log'), ..., expected) {
     sink(type='message')
 
     ## only the expected messages are in the log file
-    expect_identical(readLines(log_file[[1]]), # in case caller passed `c(dest, level)`
+    expect_identical(readLines(log_file[[1]]), # in case caller passed `c(dest, threshold)`
                      expected)
     
     ## nothing is sent to the console
@@ -27,14 +27,14 @@ test_that('file-only output', {
 })
 
 
-test_that('file-only at debug level', {
+test_that('file-only at debug threshold', {
     file_helper(expected = c('hello there',
                              'debugging message'),
-                level = 'DEBUG')
+                threshold = 'DEBUG')
 })
 
 
-test_that('file-only at trace level', {
+test_that('file-only at trace threshold', {
     file_helper(c(tempfile(), 'TRACE'),
                 expected = c('hello there',
                              'detailed output',
@@ -42,14 +42,14 @@ test_that('file-only at trace level', {
 })
 
 
-test_that('file-only at NULL level', {
+test_that('file-only at NULL threshold', {
     file_helper(list(tempfile(), NULL),
                 expected = character(0))
 })
 
 
-test_that('file-only at default NULL level', {
-    file_helper(level = NULL,
+test_that('file-only at default NULL threshold', {
+    file_helper(threshold = NULL,
                 expected = character(0))
 })
 

@@ -1,4 +1,4 @@
-LogOutput <- function(destination=stderr(), level = 'INFO') {
+LogOutput <- function(destination=stderr(), threshold = 'INFO') {
     connection <- if (identical(destination, '')) {
         stderr()
     } else if (is.character(destination) &&
@@ -11,7 +11,7 @@ LogOutput <- function(destination=stderr(), level = 'INFO') {
     if (!isOpen(connection)) open(connection, 'wt')
     
     structure(list(connection = connection,
-                   level = logging_level(level)),
+                   threshold = logging_level(threshold)),
               class = 'LogOutput')
 }
 
@@ -28,13 +28,13 @@ logging_level <- function(level) {
 
 
 ## Prints the message to the given output if the message's detail
-## level is lower than that of the output.
+## level is lower than the output's threshold.
 ##
 ## @param log_output
 ## @param message
 ## @return None (invisible \code{NULL})
 output_message <- function(log_output, message) {
-    if (message$level <= log_output$level)
+    if (message$level <= log_output$threshold)
         cat(conditionMessage(message), file = log_output$connection, sep='')
 }
 

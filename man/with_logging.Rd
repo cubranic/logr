@@ -4,7 +4,7 @@
 \alias{with_logging}
 \title{Manage the current logging context.}
 \usage{
-with_logging(expr, ..., level = NA)
+with_logging(expr, ..., threshold = NA)
 
 suppress_logging(expr)
 }
@@ -13,7 +13,7 @@ suppress_logging(expr)
 
 \item{...}{output destinations, see details below}
 
-\item{level}{the default level used as the threshold for logging
+\item{threshold}{the default level used as the threshold for logging
 outputs}
 }
 \description{
@@ -36,7 +36,7 @@ received by \code{with_logging} because of the mechanics of R's
 condition handling system.
 
 Each output destination has to be a file name, a connection object,
-or a pair of "(destination, detail_level)". If no output
+or a pair of "(destination, threshold_level)". If no output
 destination is given, logging will use \code{stderr()} at the
 "INFO" threshold.
 }
