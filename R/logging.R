@@ -44,8 +44,12 @@
 #' }, list(tempfile(), 'TRACE'), stderr())
 #' 
 #' @export
-with_logging <- function(expr, ..., threshold = NA) {
-    log_outputs <- make_log_output(threshold, ...)
+with_logging <- function(expr, ..., threshold = 'INFO') {
+    destinations <- list(...)
+    if (length(destinations) == 0) {
+        destinations <- list(stderr())
+    }
+    log_outputs <- make_log_output(threshold, destinations)
     on.exit(lapply(log_outputs, close.LogOutput))
 
     with_logging_call <- sys.call()
@@ -75,18 +79,10 @@ suppress_logging <- function(expr) {
 }
 
 
-make_log_output <- function(default_threshold, ...) {
-    destinations <- list(...)
-    if (length(destinations) == 0) {
-        destinations <- list(stderr())
-    }
+make_log_output <- function(default_threshold, destinations) {
     Reduce(function(outputs, d) {
         dd <- if (length(d) == 1) {
-            if (!is.null(default_threshold) && is.na(default_threshold)) {
-                LogOutput(d)
-            } else {
-                LogOutput(d, default_threshold)
-            }
+            LogOutput(d, default_threshold)
         } else if (length(d) == 2) {
             d <- as.list(d)
             LogOutput(d[[1]], d[[2]])

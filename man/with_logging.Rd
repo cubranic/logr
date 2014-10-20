@@ -4,7 +4,7 @@
 \alias{with_logging}
 \title{Manage the current logging context.}
 \usage{
-with_logging(expr, ..., threshold = NA)
+with_logging(expr, ..., threshold = "INFO")
 
 suppress_logging(expr)
 }

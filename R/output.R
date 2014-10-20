@@ -1,4 +1,4 @@
-LogOutput <- function(destination=stderr(), threshold = 'INFO') {
+LogOutput <- function(destination=stderr(), threshold) {
     connection <- if (identical(destination, '')) {
         stderr()
     } else if (is.character(destination) &&
